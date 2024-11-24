@@ -1,0 +1,48 @@
+.light {
+  // 主题色
+  --ant-primary-color: #1890ff;
+  --ant-primary-color-hover: #40a9ff;
+  --ant-primary-color-active: #096dd9;
+  --ant-primary-color-outline: rgba(24, 144, 255, 0.2);
+  
+  // 背景色
+  --ant-background-color-base: #f0f2f5;
+  --ant-component-background: #ffffff;
+  
+  // 文本色
+  --ant-text-color: rgba(0, 0, 0, 0.85);
+  --ant-text-color-secondary: rgba(0, 0, 0, 0.45);
+  --ant-text-color-disabled: rgba(0, 0, 0, 0.25);
+  
+  // 边框色
+  --ant-border-color-base: #d9d9d9;
+  --ant-border-color-split: #f0f0f0;
+  
+  // 登录页特殊处理
+  .login-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.2);
+    
+    .logo-text {
+      color: var(--ant-text-color);
+    }
+  }
+  
+  // 表格样式
+  .ant-table {
+    background-color: var(--ant-component-background);
+    color: var(--ant-text-color);
+    
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      color: var(--ant-text-color);
+      border-bottom: 1px solid var(--ant-border-color-split);
+    }
+  }
+  
+  // 卡片样式
+  .ant-card {
+    background-color: var(--ant-component-background);
+    border-color: var(--ant-border-color-base);
+  }
+} 

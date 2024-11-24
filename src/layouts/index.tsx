@@ -13,9 +13,14 @@ const LayoutIndex = () => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider 
+        trigger={null} 
+        collapsible 
+        collapsed={collapsed}
+        width={250}
+      >
         <div style={{ height: 32, margin: 16, background: "rgba(255, 255, 255, 0.2)" }} />
-        <LayoutMenu theme="dark" />
+        <LayoutMenu theme="dark"/>
       </Sider>
       <Layout>
         <LayoutHeader 
