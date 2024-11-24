@@ -1,6 +1,6 @@
 import { Switch } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme } from '@/redux/modules/theme/action';
+import { setTheme } from '@/store/modules/theme/action';
 
 const ThemeSwitch = () => {
   const dispatch = useDispatch();

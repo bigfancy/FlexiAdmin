@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import Login from "@/views/login";
-import Layout from "@/layouts";
+import Layout from "@/layout";
 import User from "@/views/system/user";
 import Role from "@/views/system/role";
 import Permission from "@/views/system/permission";

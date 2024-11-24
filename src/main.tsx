@@ -6,7 +6,7 @@ import 'virtual:uno.css'
 import '@/styles/index.scss'
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from '@/redux';
+import { store, persistor } from '@/store';
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

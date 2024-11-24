@@ -1,24 +1,51 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "allowJs": false,
+    // "target": "ESNext",
+    // "jsx": "react-jsx",
+    // "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    // "useDefineForClassFields": true,
+    // "module": "ESNext",
+    // "moduleResolution": "Node",
+    // "resolveJsonModule": true,
+    // "allowJs": false,
+    // "strict": true,
+    // "noEmit": true,
+    // "allowSyntheticDefaultImports": true,
+    // "esModuleInterop": false,
+    // "forceConsistentCasingInFileNames": true,
+    // "isolatedModules": true,
+    // "skipLibCheck": false,
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@/*": ["src/*"]
+    // },
+
+    // 严格性和类型检查相关配置
     "strict": true,
-    "noEmit": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "skipLibCheck": false,
+
+    // 模块和兼容性相关配置
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    // 调试和兼容性相关配置
+    "sourceMap": true,
+    "useDefineForClassFields": true,
+    "allowJs": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+
+    // 类型声明相关配置
+    "types": ["node", "vite/client"]
   },
-  "include": ["./src"]
+  "include": ["mock/**/*.ts", "src/**/*.ts","src/**/*.tsx","vite.config.ts","uno.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

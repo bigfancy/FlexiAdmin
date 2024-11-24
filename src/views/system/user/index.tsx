@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Table, Button, Space, Drawer, Form, Input, Select, Card, Row, Col, Switch } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Space, Drawer, Form, Input, Select, Card, Row, Col, Switch, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -7,30 +7,72 @@ interface UserType {
   id: number;
   username: string;
   status: number;
-  roleId: number;
+  roleIds: number[];
   createTime: string;
+  nickname?: string;
 }
 
 const UserManagement: React.FC = () => {
   const [searchForm] = Form.useForm();
-  const [data, setData] = useState<UserType[]>([
-    {
-      id: 1,
-      username: 'admin',
-      status: 1,
-      roleId: 1,
-      createTime: '2024-01-01 12:00:00'
-    },
-    {
-      id: 2,
-      username: 'test',
-      status: 0,
-      roleId: 2,
-      createTime: '2024-01-02 12:00:00'
-    }
-  ]);
+  const [data, setData] = useState<UserType[]>([]);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/v1/users/page');
+      const json = await res.json();
+      if (json.code === '00000') {
+        setData(json.data.list);
+      }
+    } catch (err) {
+      message.error('获取用户列表失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await fetch(`/api/v1/users/${id}`, {
+        method: 'DELETE'
+      });
+      const json = await res.json();
+      if (json.code === '00000') {
+        message.success('删除成功');
+        fetchUsers();
+      }
+    } catch (err) {
+      message.error('删除失败');
+    }
+  };
+
+  const onFinish = async (values: any) => {
+    try {
+      const res = await fetch('/api/v1/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+      const json = await res.json();
+      if (json.code === '00000') {
+        message.success('添加成功');
+        setVisible(false);
+        form.resetFields();
+        fetchUsers();
+      }
+    } catch (err) {
+      message.error('添加失败');
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const columns: ColumnsType<UserType> = [
     {
@@ -46,7 +88,7 @@ const UserManagement: React.FC = () => {
     },
     {
       title: '角色',
-      dataIndex: 'roleId',
+      dataIndex: 'roleIds',
     },
     {
       title: '创建时间',
@@ -58,17 +100,18 @@ const UserManagement: React.FC = () => {
       render: (_, record) => (
         <Space>
           <Button type="link" icon={<EditOutlined />}>编辑</Button>
-          <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+          <Button 
+            type="link" 
+            danger 
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record.id)}
+          >
+            删除
+          </Button>
         </Space>
       )
     }
   ];
-
-  const onFinish = (values: any) => {
-    console.log('表单值:', values);
-    setVisible(false);
-    form.resetFields();
-  };
 
   return (
     <div className="p-4">
@@ -89,7 +132,7 @@ const UserManagement: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item name="roleId" label="角色">
+              <Form.Item name="roleIds" label="角色">
                 <Select placeholder="请选择角色">
                   <Select.Option value={1}>管理员</Select.Option>
                   <Select.Option value={2}>普通用户</Select.Option>
@@ -114,7 +157,12 @@ const UserManagement: React.FC = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} rowKey="id" />
+      <Table 
+        columns={columns} 
+        dataSource={data} 
+        rowKey="id" 
+        loading={loading}
+      />
 
       <Drawer
         title="新增用户"
@@ -152,7 +200,7 @@ const UserManagement: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="roleId"
+            name="roleIds"
             label="角色"
             rules={[{ required: true, message: '请选择角色' }]}
           >
